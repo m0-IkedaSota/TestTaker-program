@@ -1,0 +1,130 @@
+"ヘッダー.h"
+#pragma once
+#include<iostream>
+#include<string>
+using namespace std;
+
+//独自のクラス
+struct TestTaker {
+	int id;
+	string name;
+	int score;
+
+	TestTaker(int newid, const string& newname, int newscore) : id(newid), name(newname), score(newscore) {};
+
+};
+
+
+
+
+
+
+
+
+
+
+
+"ソース.cpp"
+#include<iostream>
+#include<fstream>
+#include<string>
+#include<vector>
+#include<algorithm>
+#include"ヘッダー.h"
+using namespace std;
+
+//独自の関数
+int passing(int x) {
+	return x - 60;
+};
+
+int main() {
+	int totalscore = 0;
+	int rank2 = 1;
+
+
+	//受験者リスト,パスワード記入
+	vector<TestTaker> list;
+	vector<string> pass1;
+
+	//受験人数
+	int n = 6;
+
+	list.emplace_back(20142001, "ハヤシ タカシ", 20);
+	pass1.emplace_back("hayashi01");
+
+	list.emplace_back(20142002, "タナカ マサヤ", 20);
+	pass1.emplace_back("tanaka02");
+
+	list.emplace_back(20142003, "カネコ ケンタ", 80);
+	pass1.emplace_back("kaneko03");
+
+	list.emplace_back(20142004, "ヤマグチ ノボル", 70);
+	pass1.emplace_back("yamaguti04");
+
+	list.emplace_back(20142005, "ナカノ ヨウヘイ", 30);
+	pass1.emplace_back("nakano05");
+
+	list.emplace_back(20142006, "ワタナベ サトシ", 80);
+	pass1.emplace_back("watanabe06");
+
+
+
+
+
+	//パスワード入力
+	cout << "パスワードを入力してください\n" << "↓" << endl;
+
+	//パスワード入力に対する応答
+	string str;
+	cin >> str;
+		auto begin = pass1.cbegin();
+		auto end = pass1.cend();
+		auto pos = find(begin, end, str);
+		if (pos == end)cout << "パスワードが違います" << endl;
+
+		else {
+			//受験者情報、得点
+			cout << "\nログイン成功\n\n\n\n"
+				<< " 氏名：" << list[pos - pass1.cbegin()].name
+				<< "   受験番号：" << list[pos - pass1.cbegin()].id << endl << endl;
+			cout << " 点数：" << list[pos - pass1.cbegin()].score << "/100 点   ";
+
+			//平均値計算
+			for (auto& p : list) totalscore += p.score;
+			int avg = totalscore / n;
+			cout << " (平均点：" << avg << ")\n" << endl;
+
+
+			//順位
+			for (int i = 0; i < n; i++) {
+				if (list[pos - pass1.cbegin()].score < list[i].score) {
+					rank2 += 1;
+				};
+			};
+			cout << " 順位：" << rank2 << endl << endl;
+
+
+			//合格判定
+			//cout << " 判定:";
+			//if (list[pos - pass1.cbegin()].score < 60) {
+			//	cout << "不合格\n" << endl;
+			//}
+			//else {
+			//	cout << "合格\n\n おめでとうございます。\n" << endl;
+			//};
+
+			//合格点まで
+			int result = passing(list[pos - pass1.cbegin()].score);
+			if (result < 0) {
+				cout << " 判定：不合格\n\n 合格点60点まであと" << -result << "点でした。" << endl;
+			}
+			else{
+				cout  << " 判定：合格\n\n おめでとうございます。\n" << endl;
+			};
+
+	};
+
+};
+
+
