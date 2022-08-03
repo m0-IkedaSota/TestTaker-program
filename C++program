@@ -1,4 +1,4 @@
-"ヘッダー.h"
+//"ヘッダー.h"
 #pragma once
 #include<iostream>
 #include<string>
@@ -24,7 +24,7 @@ struct TestTaker {
 
 
 
-"ソース.cpp"
+//"ソース.cpp"
 #include<iostream>
 #include<fstream>
 #include<string>
